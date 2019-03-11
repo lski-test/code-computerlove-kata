@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Code.Checkout
 {
@@ -6,9 +7,11 @@ namespace Code.Checkout
     {
         // NB: When not passing items as interfaces, use concrete classes as it reduces virtual calls in the compiler
         private readonly List<Product> _items;
+        private readonly IProductRepo _repo;
 
-        public Checkout()
+        public Checkout(IProductRepo productRepo)
         {
+            _repo = productRepo ?? throw new ArgumentNullException(nameof(productRepo));
             _items = new List<Product>();
         }
 

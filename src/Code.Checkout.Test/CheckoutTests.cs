@@ -8,7 +8,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void No_Items_Should_Be_Zero()
         {
-            var checkout = new Checkout();
+            var checkout = new Checkout(new MockProductRepo());
 
             checkout.TotalPrice.Should().Be(0);
         }
@@ -16,7 +16,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Single_Item_Should_Have_Correct_Total()
         {
-            var checkout = new Checkout();
+            var checkout = new Checkout(new MockProductRepo());
 
             checkout.Scan("A");
 
@@ -26,7 +26,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Multiple_Items_Should_Have_Correct_Total()
         {
-            var checkout = new Checkout();
+            var checkout = new Checkout(new MockProductRepo());
 
             checkout.Scan("A");
             checkout.Scan("B");
