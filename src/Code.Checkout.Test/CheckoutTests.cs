@@ -22,5 +22,16 @@ namespace Code.Checkout.Test
 
             checkout.TotalPrice.Should().Be(50);
         }
+
+        [Fact]
+        public void Multiple_Items_Should_Have_Correct_Total()
+        {
+            var checkout = new Checkout();
+
+            checkout.Scan("A");
+            checkout.Scan("B");
+
+            checkout.TotalPrice.Should().Be(80);
+        }
     }
 }
