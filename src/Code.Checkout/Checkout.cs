@@ -2,10 +2,7 @@
 {
     public class Checkout : ICheckout
     {
-        public decimal GetTotalPrice()
-        {
-            throw new System.NotImplementedException();
-        }
+        public decimal TotalPrice { get; private set; }
 
         public void Scan(string item)
         {

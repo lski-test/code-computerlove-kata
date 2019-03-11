@@ -10,7 +10,7 @@ namespace Code.Checkout.Test
         {
             var checkout = new Checkout();
 
-            checkout.GetTotalPrice().Should().Be(0);
+            checkout.TotalPrice.Should().Be(0);
         }
     }
 }

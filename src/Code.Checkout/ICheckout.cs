@@ -4,6 +4,6 @@
     {
         void Scan(string item);
 
-        decimal GetTotalPrice();
+        decimal TotalPrice { get; }
     }
 }
