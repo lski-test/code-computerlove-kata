@@ -5,7 +5,8 @@ namespace Code.Checkout
 {
     public class Checkout : ICheckout
     {
-        // NB: When not passing items as interfaces, use concrete classes as it reduces virtual calls in the compiler
+        // NB: When not passing items as interfaces, use concrete classes as it reduces virtual calls in the compiler.
+        // NB: Or create concrete class to make explicit API contract
         private readonly List<Product> _items;
         private readonly IProductRepo _repo;
 
@@ -17,7 +18,7 @@ namespace Code.Checkout
 
         public decimal TotalPrice { get; private set; }
 
-        public void Scan(string item)
+        public bool Scan(string item)
         {
             throw new System.NotImplementedException();
         }
