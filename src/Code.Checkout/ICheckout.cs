@@ -2,7 +2,7 @@
 {
     public interface ICheckout
     {
-        bool Scan(string item);
+        bool Scan(string sku);
 
         decimal TotalPrice { get; }
     }
