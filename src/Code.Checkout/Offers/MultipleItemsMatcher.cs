@@ -22,36 +22,112 @@ namespace Code.Checkout.Offers
 
         public IEnumerable<IPriceModifer> Match(IReadOnlyList<CheckoutItem> items)
         {
+            //var itemSearchStartPos = 0;
+
+            //foreach (var item in items)
+            //{
+            //    var
+
+
+            //}
+
+            //for (int i = 0, n = items.Count(); i < n; i++)
+            //{
+
+            //    var item = items[0];
+
+            //    if (sku.Equals(item.Sku, StringComparison.OrdinalIgnoreCase))
+            //    {
+            //        matchedItems.Add(item);
+            //        itemSearchStartPos = i + 1;
+            //        break;
+            //    }
+            //}
+
+
+            // need to know at the end is 'next position in items'
+
+
             var itemSearchStartPos = 0;
-            var matchedItems = new List<CheckoutItem>();
-            var parsedItems = items.Where(i => !i.InDeal);
+            var offers = new List<IPriceModifer>();
 
-            foreach (var sku in _skus)
-            {
-                for (int i = itemSearchStartPos, n = items.Count(); i < n; i++) {
+            while (itemSearchStartPos < items.Count) {
 
-                    var item = items[0];
+                var offer = ParseOffer();
 
-                    if (sku.Equals(item.Sku, StringComparison.OrdinalIgnoreCase)) {
-                        matchedItems.Add(item);
-                        itemSearchStartPos = i + 1;
-                        break;
-                    }
+                if (offer != null)
+                {
+                    offers.Add(offer);
                 }
             }
 
-            // If the whole deal is complete then return the deal modifier
-            // NB: Need to modify the items so they are ignored in future checks
-            if (matchedItems.Count() == _skus.Count()) {
-                // TODO: hould be checking for more items that match the deal
-                return new[] {
-                    new MultipleItemsPriceModifier {
+            return offers;
 
+            //var matchedItems = new List<CheckoutItem>();
+            //var parsedItems = items.Where(i => !i.InDeal);
+
+            //foreach (var sku in _skus)
+            //{
+            //    for (int i = itemSearchStartPos, n = items.Count(); i < n; i++) {
+
+            //        var item = items[0];
+
+            //        if (sku.Equals(item.Sku, StringComparison.OrdinalIgnoreCase)) {
+            //            matchedItems.Add(item);
+            //            itemSearchStartPos = i + 1;
+            //            break;
+            //        }
+            //    }
+            //}
+
+            //// If the whole deal is complete then return the deal modifier
+            //// NB: Need to modify the items so they are ignored in future checks
+            //if (matchedItems.Count() == _skus.Count()) {
+            //    // TODO: hould be checking for more items that match the deal
+            //    return new[] {
+            //        new MultipleItemsPriceModifier {
+
+            //        }
+            //    };
+            //}
+
+            //return new MultipleItemsPriceModifier[] { };
+
+            MultipleItemsPriceModifier ParseOffer()
+            {
+                var matchedItems = new List<CheckoutItem>();
+                var parsedItems = items.Where(i => !i.InDeal);
+
+                foreach (var sku in _skus)
+                {
+                    for (int i = itemSearchStartPos, n = items.Count(); i < n; i++)
+                    {
+
+                        var item = items[0];
+
+                        if (sku.Equals(item.Sku, StringComparison.OrdinalIgnoreCase))
+                        {
+                            matchedItems.Add(item);
+                            itemSearchStartPos = i + 1;
+                            break;
+                        }
                     }
-                };
-            }
+                }
 
-            return new MultipleItemsPriceModifier[] { };
+                // If the whole deal is complete then return the deal modifier
+                // NB: Need to modify the items so they are ignored in future checks
+                if (matchedItems.Count() == _skus.Count())
+                {
+                    // TODO: hould be checking for more items that match the deal
+                    return
+                        new MultipleItemsPriceModifier {
+
+                        }
+                    ;
+                }
+
+                return null;
+            }
         }
     }
 }
