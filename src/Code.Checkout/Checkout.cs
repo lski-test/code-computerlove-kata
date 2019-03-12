@@ -9,14 +9,14 @@ namespace Code.Checkout
     {
         // NB: When not passing items as interfaces, use concrete classes as it reduces virtual calls in the compiler.
         // NB: Or create concrete class to make explicit API contract
-        private readonly List<CheckoutItem> _items;
+        private readonly List<Product> _items;
 
         private readonly IProductRepo _repo;
 
         public Checkout(IProductRepo productRepo)
         {
             _repo = productRepo ?? throw new ArgumentNullException(nameof(productRepo));
-            _items = new List<CheckoutItem>();
+            _items = new List<Product>();
         }
 
         public decimal TotalPrice { get; private set; }
@@ -29,8 +29,9 @@ namespace Code.Checkout
 
             if (item == null) { return false; }
 
-            _items.Add(item.ToCheckoutItem());
+            _items.Add(item);
 
+            // Need to create CheckoutItems here and feed them into an offer matcher, then through price modifiers
             TotalPrice = _items.Sum(i => i.Price);
 
             return true;
