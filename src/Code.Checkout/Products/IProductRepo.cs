@@ -1,4 +1,4 @@
-﻿namespace Code.Checkout
+﻿namespace Code.Checkout.Products
 {
     public interface IProductRepo
     {

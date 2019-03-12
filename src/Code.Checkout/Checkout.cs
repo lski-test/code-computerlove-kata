@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Code.Checkout.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 

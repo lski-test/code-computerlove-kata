@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Code.Checkout.Products;
+using FluentAssertions;
 using Xunit;
 
 namespace Code.Checkout.Test

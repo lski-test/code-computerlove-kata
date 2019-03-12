@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Code.Checkout.Products;
+using System;
 using System.Collections.Generic;
 
 namespace Code.Checkout.Test
 {
-
     /// <summary>
     /// As this is an interview example then the repo wouldnt be hard coded like this, hence only creating a mocked repo.
     /// </summary>
