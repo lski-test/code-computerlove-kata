@@ -1,3 +1,4 @@
+using Code.Checkout.Products;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -55,6 +56,22 @@ namespace Code.Checkout.Test
             checkout.Scan("A").Should().BeTrue();
             checkout.Scan("unknown").Should().BeFalse();
             checkout.Scan("B").Should().BeTrue();
+        }
+
+        [Fact]
+        public void Product_Should_Convert_To_CheckoutItem()
+        {
+            new Product {
+                Sku = "A",
+                Price = 10
+            }
+            .ToCheckoutItem()
+            .Should()
+            .BeEquivalentTo(new CheckoutItem {
+                Sku = "A",
+                Price = 10,
+                InDeal = false
+            });
         }
 
         [Fact]
