@@ -1,4 +1,5 @@
 using FluentAssertions;
+using System;
 using Xunit;
 
 namespace Code.Checkout.Test
@@ -54,6 +55,36 @@ namespace Code.Checkout.Test
             checkout.Scan("A").Should().BeTrue();
             checkout.Scan("unknown").Should().BeFalse();
             checkout.Scan("B").Should().BeTrue();
+        }
+
+        [Fact]
+        public void Items_Matching_Single_Offer_Correct_Price()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Items_Matching_Single_Offer_With_Additional_Items_Correct_Price()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Items_Matching_Single_Offer_With_Additional_Items_Unordered_Correct_Price()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Items_Matching_Multiple_Offers_Correct_Price()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Items_Matching_Multiple_Offers_With_Additional_Items_Unordered_Correct_Price()
+        {
+            throw new NotImplementedException();
         }
     }
 }
