@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Code.Checkout.Offers
 {
@@ -10,7 +11,7 @@ namespace Code.Checkout.Offers
 
         public int Priority { get; }
 
-        public MultipleItemsMatcher(IEnumerable<string> skus, decimal fixedPrice, short priority = 0)
+        public MultipleItemsMatcher(IReadOnlyList<string> skus, decimal fixedPrice, short priority = 0)
         {
             _skus = skus ?? throw new ArgumentNullException(nameof(skus));
 
@@ -19,9 +20,38 @@ namespace Code.Checkout.Offers
             Priority = priority;
         }
 
-        public IEnumerable<IOffer> Match(IEnumerable<CheckoutItem> items)
+        public IEnumerable<IPriceModifer> Match(IReadOnlyList<CheckoutItem> items)
         {
-            throw new NotImplementedException();
+            var itemSearchStartPos = 0;
+            var matchedItems = new List<CheckoutItem>();
+            var parsedItems = items.Where(i => !i.InDeal);
+
+            foreach (var sku in _skus)
+            {
+                for (int i = itemSearchStartPos, n = items.Count(); i < n; i++) {
+
+                    var item = items[0];
+
+                    if (sku.Equals(item.Sku, StringComparison.OrdinalIgnoreCase)) {
+                        matchedItems.Add(item);
+                        itemSearchStartPos = i + 1;
+                        break;
+                    }
+                }
+            }
+
+            // If the whole deal is complete then return the deal modifier
+            // NB: Need to modify the items so they are ignored in future checks
+            if (matchedItems.Count() == _skus.Count()) {
+                // TODO: hould be checking for more items that match the deal
+                return new[] {
+                    new MultipleItemsPriceModifier {
+
+                    }
+                };
+            }
+
+            return new MultipleItemsPriceModifier[] { };
         }
     }
 }
