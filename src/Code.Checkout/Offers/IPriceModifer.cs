@@ -2,7 +2,7 @@
 
 namespace Code.Checkout.Offers
 {
-    public interface IOffer
+    public interface IPriceModifer
     {
         decimal Modifier(decimal total);
     }
