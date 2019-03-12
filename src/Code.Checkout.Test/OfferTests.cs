@@ -22,6 +22,37 @@ namespace Code.Checkout.Test
         }
 
         [Fact]
+        public void Single_Multiplier_Deal_With_Remainders()
+        {
+            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+
+            var deals = matcher.Match(new[] {
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 }
+            });
+
+            deals.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Single_Multiplier_Deal_With_Other_Items()
+        {
+            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+
+            var deals = matcher.Match(new[] {
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "C", Price = 15 },
+                new CheckoutItem { Sku = "B", Price = 30 },
+                new CheckoutItem { Sku = "A", Price = 50 }
+            });
+
+            deals.Should().HaveCount(1);
+        }
+
+        [Fact]
         public void Several_Multiplier_Deals_Correctly_Discovered()
         {
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
