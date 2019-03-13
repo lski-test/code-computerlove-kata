@@ -78,31 +78,70 @@ namespace Code.Checkout.Test
         [Fact]
         public void Items_Matching_Single_Offer_Correct_Price()
         {
-            throw new NotImplementedException();
+            var checkout = new Checkout(new MockProductRepo());
+
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("A");
+
+            checkout.TotalPrice.Should().Be(130);
         }
 
         [Fact]
         public void Items_Matching_Single_Offer_With_Additional_Items_Correct_Price()
         {
-            throw new NotImplementedException();
+            var checkout = new Checkout(new MockProductRepo());
+
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("B");
+
+            checkout.TotalPrice.Should().Be(160);
         }
 
         [Fact]
         public void Items_Matching_Single_Offer_With_Additional_Items_Unordered_Correct_Price()
         {
-            throw new NotImplementedException();
+            var checkout = new Checkout(new MockProductRepo());
+
+            checkout.Scan("A");
+            checkout.Scan("B");
+            checkout.Scan("A");
+            checkout.Scan("A");
+
+            checkout.TotalPrice.Should().Be(160);
         }
 
         [Fact]
         public void Items_Matching_Multiple_Offers_Correct_Price()
         {
-            throw new NotImplementedException();
+            var checkout = new Checkout(new MockProductRepo());
+
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("A");
+            checkout.Scan("B");
+            checkout.Scan("B");
+
+            checkout.TotalPrice.Should().Be(175);
         }
 
         [Fact]
         public void Items_Matching_Multiple_Offers_With_Additional_Items_Unordered_Correct_Price()
         {
-            throw new NotImplementedException();
+            var checkout = new Checkout(new MockProductRepo());
+
+            checkout.Scan("D");
+            checkout.Scan("A");
+            checkout.Scan("B");
+            checkout.Scan("D");
+            checkout.Scan("A");
+            checkout.Scan("C");
+            checkout.Scan("A");
+            checkout.Scan("B");
+
+            checkout.TotalPrice.Should().Be(225);
         }
     }
 }
