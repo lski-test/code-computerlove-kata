@@ -331,5 +331,23 @@ namespace Code.Checkout.Test
 
             (itemsPrice - price).Should().Be(45);
         }
+
+        [Fact]
+        public void Offers_Combine_Multiple_Matchers()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Offers_Apply_Offers()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        private void Offers_Applied_In_Correct_Order()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
