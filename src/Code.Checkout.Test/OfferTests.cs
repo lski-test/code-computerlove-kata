@@ -1,6 +1,8 @@
 ﻿using Code.Checkout.Offers;
+using Code.Checkout.Products;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -333,15 +335,45 @@ namespace Code.Checkout.Test
         }
 
         [Fact]
-        public void Offers_Combine_Multiple_Matchers()
+        public void Offers_Apply_No_Offers()
         {
-            throw new NotImplementedException();
+            var processor = new ProcessOffers(new MockOfferRepo(new List<IOfferMatcher>()));
+            var products = new[] {
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "C", Price = 20 },
+                new Product { Sku = "C", Price = 20 },
+                new Product { Sku = "B", Price = 30 },
+                new Product { Sku = "B", Price = 30 },
+                new Product { Sku = "D", Price = 20 }
+            };
+            var productsTotal = products.Sum(p => p.Price);
+
+            var breakdown = processor.Apply(products);
+
+            (productsTotal - breakdown.SalePrice).Should().Be(0);
         }
 
         [Fact]
-        public void Offers_Apply_Offers()
+        public void Offers_Apply_With_Offers()
         {
-            throw new NotImplementedException();
+            var processor = new ProcessOffers(new MockOfferRepo());
+            var products = new[] {
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "C", Price = 20 },
+                new Product { Sku = "C", Price = 20 },
+                new Product { Sku = "B", Price = 30 },
+                new Product { Sku = "B", Price = 30 },
+                new Product { Sku = "D", Price = 20 }
+            };
+            var productsTotal = products.Sum(p => p.Price);
+
+            var breakdown = processor.Apply(products);
+
+            (productsTotal - breakdown.SalePrice).Should().Be(35);
         }
 
         [Fact]
