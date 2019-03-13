@@ -24,7 +24,8 @@ namespace Code.Checkout.Offers
                 .OrderByDescending(k => k.Priority)
                 .Aggregate(
                     new OfferMatches(items),
-                    (accumulator, item) => item.Match(accumulator)
+                    (accumulator, item) => 
+                        item.Match(accumulator)
                 );
 
             // Use the list of modifiers to return a new value

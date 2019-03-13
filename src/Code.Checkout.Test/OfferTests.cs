@@ -398,7 +398,7 @@ namespace Code.Checkout.Test
 
             var breakdown = processor.Apply(products);
 
-            (productsTotal - breakdown.SalePrice).Should().Be(15);
+            (productsTotal - breakdown.SalePrice).Should().Be(65);
         }
     }
 }
