@@ -8,9 +8,9 @@ namespace Code.Checkout.Test
     {
         private List<IOfferMatcher> _matchers;
 
-        public MockOfferRepo()
+        public MockOfferRepo(List<IOfferMatcher> matchers = null)
         {
-            _matchers = new List<IOfferMatcher> {
+            _matchers = matchers ?? new List<IOfferMatcher> {
                  new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
                  new MultipleItemsMatcher(new[] { "B", "B" }, 45)
             };
