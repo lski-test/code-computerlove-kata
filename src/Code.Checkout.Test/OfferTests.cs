@@ -253,19 +253,83 @@ namespace Code.Checkout.Test
         [Fact]
         public void Chain_Two_Deal_Matchers()
         {
-            throw new NotImplementedException();
+            var matchers = new[] {
+                new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
+                new MultipleItemsMatcher(new[] { "B", "B" }, 45)
+            };
+
+            var items = new[] {
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "B", Price = 30 }
+            };
+
+            var itemsPrice = items.Sum(i => i.Price);
+
+            var matches = matchers.Aggregate(new OfferMatches(items), (accumulator, item) => item.Match(accumulator));
+
+            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+
+            (itemsPrice - price).Should().Be(35);
         }
 
         [Fact]
         public void Chain_Two_Deal_Matchers_With_Additionals()
         {
-            throw new NotImplementedException();
+            var matchers = new[] {
+                new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
+                new MultipleItemsMatcher(new[] { "B", "B" }, 45)
+            };
+
+            var items = new[] {
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "C", Price = 20 },
+                new OfferItem { Sku = "C", Price = 20 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "D", Price = 20 }
+            };
+
+            var itemsPrice = items.Sum(i => i.Price);
+
+            var matches = matchers.Aggregate(new OfferMatches(items), (accumulator, item) => item.Match(accumulator));
+
+            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+
+            (itemsPrice - price).Should().Be(35);
         }
 
         [Fact]
         public void Chain_Multiple_Deal_Matchers_With_Additionals()
         {
-            throw new NotImplementedException();
+            var matchers = new[] {
+                new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
+                new MultipleItemsMatcher(new[] { "B", "B" }, 45),
+                new MultipleItemsMatcher(new[] { "C", "C" }, 30)
+            };
+
+            var items = new[] {
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "C", Price = 20 },
+                new OfferItem { Sku = "C", Price = 20 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "D", Price = 20 }
+            };
+
+            var itemsPrice = items.Sum(i => i.Price);
+
+            var matches = matchers.Aggregate(new OfferMatches(items), (accumulator, item) => item.Match(accumulator));
+
+            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+
+            (itemsPrice - price).Should().Be(45);
         }
     }
 }
