@@ -8,15 +8,15 @@ namespace Code.Checkout.Offers
     /// </summary>
     public class OfferMatches
     {
-        public OfferMatches() : this(new List<IPriceModifer>(), new List<CheckoutItem>())
+        public OfferMatches() : this(new List<IPriceModifer>(), new List<OfferItem>())
         {
         }
 
-        public OfferMatches(IList<CheckoutItem> items) : this(new List<IPriceModifer>(), items)
+        public OfferMatches(IList<OfferItem> items) : this(new List<IPriceModifer>(), items)
         {
         }
 
-        public OfferMatches(IList<IPriceModifer> modifiers, IList<CheckoutItem> items)
+        public OfferMatches(IList<IPriceModifer> modifiers, IList<OfferItem> items)
         {
             Modifiers = modifiers;
             Items = items;
@@ -24,6 +24,6 @@ namespace Code.Checkout.Offers
 
         public IList<IPriceModifer> Modifiers { get; set; }
 
-        public IList<CheckoutItem> Items { get; set; }
+        public IList<OfferItem> Items { get; set; }
     }
 }

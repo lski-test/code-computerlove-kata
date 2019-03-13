@@ -21,7 +21,7 @@ namespace Code.Checkout.Offers
             Priority = priority;
         }
 
-        public OfferMatches Match(IList<CheckoutItem> items)
+        public OfferMatches Match(IList<OfferItem> items)
         {
             return Match(new OfferMatches(items));
         }
@@ -43,7 +43,7 @@ namespace Code.Checkout.Offers
             return results;
         }
 
-        private MultipleItemsPriceModifier ParseOffer(IList<CheckoutItem> items)
+        private MultipleItemsPriceModifier ParseOffer(IList<OfferItem> items)
         {
             var foundPositions = new List<int>();
 

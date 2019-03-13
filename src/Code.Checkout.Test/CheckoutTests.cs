@@ -1,3 +1,4 @@
+using Code.Checkout.Offers;
 using Code.Checkout.Products;
 using FluentAssertions;
 using System;
@@ -65,9 +66,9 @@ namespace Code.Checkout.Test
                 Sku = "A",
                 Price = 10
             }
-            .ToCheckoutItem()
+            .ToOfferItem()
             .Should()
-            .BeEquivalentTo(new CheckoutItem {
+            .BeEquivalentTo(new OfferItem {
                 Sku = "A",
                 Price = 10,
                 InDeal = false

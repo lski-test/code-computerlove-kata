@@ -14,9 +14,9 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 }
             });
 
             deals.Modifiers.Should().HaveCount(1);
@@ -28,9 +28,9 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "B", "C" }, 130);
 
             var deals = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "B", Price = 50 },
-                new CheckoutItem { Sku = "C", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "B", Price = 50 },
+                new OfferItem { Sku = "C", Price = 50 }
             });
 
             deals.Modifiers.Should().HaveCount(1);
@@ -42,9 +42,9 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "C", "B" }, 130);
 
             var deals = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "B", Price = 50 },
-                new CheckoutItem { Sku = "C", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "B", Price = 50 },
+                new OfferItem { Sku = "C", Price = 50 }
             });
 
             deals.Modifiers.Should().HaveCount(1);
@@ -56,10 +56,10 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 }
             });
 
             deals.Modifiers.Should().HaveCount(1);
@@ -71,11 +71,11 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "C", Price = 15 },
-                new CheckoutItem { Sku = "B", Price = 30 },
-                new CheckoutItem { Sku = "A", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "C", Price = 15 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "A", Price = 50 }
             });
 
             deals.Modifiers.Should().HaveCount(1);
@@ -87,12 +87,12 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 }
             });
 
             deals.Modifiers.Should().HaveCount(2);
@@ -104,9 +104,9 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "B", Price = 50 },
-                new CheckoutItem { Sku = "C", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "B", Price = 50 },
+                new OfferItem { Sku = "C", Price = 50 }
             });
 
             deals.Modifiers.Should().HaveCount(0);
@@ -126,9 +126,9 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
 
             var modifiers = matcher.Match(new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 }
             });
 
             modifiers.Modifiers.Should().HaveCount(1);
@@ -142,10 +142,10 @@ namespace Code.Checkout.Test
             var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
 
             var items = new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "B", Price = 30 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "B", Price = 30 }
             };
 
             var modifiers = matcher.Match(items);
@@ -162,11 +162,11 @@ namespace Code.Checkout.Test
             var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45);
 
             var items = new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "B", Price = 30 },
-                new CheckoutItem { Sku = "B", Price = 30 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "B", Price = 30 }
             };
 
             var itemsPrice = items.Sum(i => i.Price);
@@ -190,15 +190,15 @@ namespace Code.Checkout.Test
             var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45); // reduction of 15
 
             var items = new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "D", Price = 20 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "C", Price = 20 },
-                new CheckoutItem { Sku = "B", Price = 30 },
-                new CheckoutItem { Sku = "D", Price = 20 },
-                new CheckoutItem { Sku = "B", Price = 30 },
-                new CheckoutItem { Sku = "D", Price = 20 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "D", Price = 20 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "C", Price = 20 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "D", Price = 20 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "D", Price = 20 }
             };
 
             var itemsPrice = items.Sum(i => i.Price);
@@ -223,14 +223,14 @@ namespace Code.Checkout.Test
             var matcher3 = new MultipleItemsMatcher(new[] { "C", "C" }, 30); // reduction of 10
 
             var items = new[] {
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "A", Price = 50 },
-                new CheckoutItem { Sku = "C", Price = 20 },
-                new CheckoutItem { Sku = "C", Price = 20 },
-                new CheckoutItem { Sku = "B", Price = 30 },
-                new CheckoutItem { Sku = "B", Price = 30 },
-                new CheckoutItem { Sku = "D", Price = 20 }
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "A", Price = 50 },
+                new OfferItem { Sku = "C", Price = 20 },
+                new OfferItem { Sku = "C", Price = 20 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "B", Price = 30 },
+                new OfferItem { Sku = "D", Price = 20 }
             };
 
             var itemsPrice = items.Sum(i => i.Price);

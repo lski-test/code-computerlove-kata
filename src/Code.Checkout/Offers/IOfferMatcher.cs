@@ -13,7 +13,7 @@ namespace Code.Checkout.Offers
         /// <summary>
         /// Converts items to a <see cref="OfferMatches"/> and then calls <see cref="Match(OfferMatches)"/>
         /// </summary>
-        OfferMatches Match(IList<CheckoutItem> items);
+        OfferMatches Match(IList<OfferItem> items);
 
         /// <summary>
         /// Find what items match the offer and return the amount of offers (along with their modifiers to the total price).
