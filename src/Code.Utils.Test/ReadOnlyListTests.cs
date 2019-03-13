@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Code.Utils.Test
 {
-    public class CollectionsTest
+    public class ReadOnlyListTests
     {
         [Fact]
         public void Find_Existing_Item()
