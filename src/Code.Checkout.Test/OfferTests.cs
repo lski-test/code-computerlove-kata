@@ -98,7 +98,6 @@ namespace Code.Checkout.Test
             deals.Should().HaveCount(2);
         }
 
-
         [Fact]
         public void No_Deals_Correctly_Discovered()
         {
@@ -114,8 +113,8 @@ namespace Code.Checkout.Test
         }
 
         [Fact]
-        public void Price_Modifier_Raw_Test() {
-
+        public void Price_Modifier_Raw_Test()
+        {
             var mod = new MultipleItemsPriceModifier(20, 15);
 
             mod.Modifier(100).Should().Be(95);
@@ -154,6 +153,24 @@ namespace Code.Checkout.Test
             modifiers.Should().HaveCount(1);
 
             modifiers.ElementAt(0).Modifier(180).Should().Be(160);
+        }
+
+        [Fact]
+        public void Chain_Two_Deal_Matchers()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Chain_Two_Deal_Matchers_With_Additionals()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void Chain_Multiple_Deal_Matchers_With_Additionals()
+        {
+            throw new NotImplementedException();
         }
     }
 }
