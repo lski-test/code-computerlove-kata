@@ -11,7 +11,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void No_Items_Should_Be_Zero()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.TotalPrice.Should().Be(0);
         }
@@ -19,7 +19,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Single_Item_Should_Have_Correct_Total()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A");
 
@@ -29,7 +29,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Multiple_Items_Should_Have_Correct_Total()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A");
             checkout.Scan("B");
@@ -40,7 +40,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Multiple_Items_With_Incorrect_Sku_Should_Have_Correct_Total()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A");
             checkout.Scan("unknown");
@@ -52,7 +52,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Scan_With_Incorrect_Sku_Should_Feedback_Correctly()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A").Should().BeTrue();
             checkout.Scan("unknown").Should().BeFalse();
@@ -78,7 +78,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Items_Matching_Single_Offer_Correct_Price()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A");
             checkout.Scan("A");
@@ -90,7 +90,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Items_Matching_Single_Offer_With_Additional_Items_Correct_Price()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A");
             checkout.Scan("A");
@@ -103,7 +103,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Items_Matching_Single_Offer_With_Additional_Items_Unordered_Correct_Price()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A");
             checkout.Scan("B");
@@ -116,7 +116,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Items_Matching_Multiple_Offers_Correct_Price()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("A");
             checkout.Scan("A");
@@ -130,7 +130,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Items_Matching_Multiple_Offers_With_Additional_Items_Unordered_Correct_Price()
         {
-            var checkout = new Checkout(new MockProductRepo());
+            var checkout = new Checkout(new MockProductRepo(), new ProcessOffers(new MockOfferRepo()));
 
             checkout.Scan("D");
             checkout.Scan("A");

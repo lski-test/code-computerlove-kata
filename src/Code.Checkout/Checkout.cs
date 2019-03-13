@@ -1,7 +1,7 @@
-﻿using Code.Checkout.Products;
+﻿using Code.Checkout.Offers;
+using Code.Checkout.Products;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Code.Checkout
 {
@@ -12,11 +12,13 @@ namespace Code.Checkout
         private readonly List<Product> _items;
 
         private readonly IProductRepo _repo;
+        private readonly IProcessOffers _offers;
 
-        public Checkout(IProductRepo productRepo)
+        public Checkout(IProductRepo productRepo, IProcessOffers offers)
         {
             _repo = productRepo ?? throw new ArgumentNullException(nameof(productRepo));
             _items = new List<Product>();
+            _offers = offers;
         }
 
         public decimal TotalPrice { get; private set; }
@@ -31,8 +33,9 @@ namespace Code.Checkout
 
             _items.Add(item);
 
-            // Need to create CheckoutItems here and feed them into an offer matcher, then through price modifiers
-            TotalPrice = _items.Sum(i => i.Price);
+            var offerBreakdown = _offers.Apply(_items);
+
+            TotalPrice = offerBreakdown.SalePrice;
 
             return true;
         }
