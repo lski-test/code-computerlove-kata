@@ -156,6 +156,101 @@ namespace Code.Checkout.Test
         }
 
         [Fact]
+        public void Two_Deal_Matchers()
+        {
+            var matcher1 = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45);
+
+            var items = new[] {
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "B", Price = 30 },
+                new CheckoutItem { Sku = "B", Price = 30 }
+            };
+
+            var itemsPrice = items.Sum(i => i.Price);
+
+            var modifier1 = matcher1.Match(items);
+            var modifier2 = matcher2.Match(items);
+
+            modifier1.Count().Should().Be(1);
+            modifier2.Count().Should().Be(1);
+
+            var price = modifier1.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier2.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+
+            (itemsPrice - price).Should().Be(35);
+        }
+
+        [Fact]
+        public void Two_Deal_Matchers_With_Additionals()
+        {
+            var matcher1 = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130); // reduction of 20
+            var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45); // reduction of 15
+
+            var items = new[] {
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "D", Price = 20 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "C", Price = 20 },
+                new CheckoutItem { Sku = "B", Price = 30 },
+                new CheckoutItem { Sku = "D", Price = 20 },
+                new CheckoutItem { Sku = "B", Price = 30 },
+                new CheckoutItem { Sku = "D", Price = 20 }
+            };
+
+            var itemsPrice = items.Sum(i => i.Price);
+
+            var modifier1 = matcher1.Match(items);
+            var modifier2 = matcher2.Match(items);
+
+            modifier1.Count().Should().Be(1);
+            modifier2.Count().Should().Be(1);
+
+            var price = modifier1.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier2.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+
+            (itemsPrice - price).Should().Be(35);
+        }
+
+        [Fact]
+        public void Multiple_Deal_Matchers_With_Additionals()
+        {
+            var matcher1 = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130); // reduction of 20
+            var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45); // reduction of 15
+            var matcher3 = new MultipleItemsMatcher(new[] { "C", "C" }, 30); // reduction of 10
+
+            var items = new[] {
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "A", Price = 50 },
+                new CheckoutItem { Sku = "C", Price = 20 },
+                new CheckoutItem { Sku = "C", Price = 20 },
+                new CheckoutItem { Sku = "B", Price = 30 },
+                new CheckoutItem { Sku = "B", Price = 30 },
+                new CheckoutItem { Sku = "D", Price = 20 }
+            };
+
+            var itemsPrice = items.Sum(i => i.Price);
+
+            var modifier1 = matcher1.Match(items);
+            var modifier2 = matcher2.Match(items);
+            var modifier3 = matcher3.Match(items);
+
+            modifier1.Count().Should().Be(1);
+            modifier2.Count().Should().Be(1);
+            modifier3.Count().Should().Be(1);
+
+            var price = modifier1.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier2.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier3.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+
+            (itemsPrice - price).Should().Be(45);
+        }
+
+        [Fact]
         public void Chain_Two_Deal_Matchers()
         {
             throw new NotImplementedException();
