@@ -1,5 +1,8 @@
 ﻿using System;
 using Xunit;
+using FluentAssertions;
+using System.Linq;
+using Code.Checkout.Offers;
 
 namespace Code.Checkout.Test
 {
@@ -8,7 +11,14 @@ namespace Code.Checkout.Test
         [Fact]
         public void Offers_Returned()
         {
-            throw new NotImplementedException();
+            var repo = new MockOfferRepo();
+
+            var offers = repo.GetOffers().ToList();
+
+            offers.Count.Should().Be(2);
+
+            offers[0].Should().BeEquivalentTo(new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130));
+            offers[1].Should().BeEquivalentTo(new MultipleItemsMatcher(new[] { "B", "B" }, 45));
         }
     }
 }
