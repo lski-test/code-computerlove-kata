@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Code.Utils.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,57 +23,48 @@ namespace Code.Checkout.Offers
 
         public IEnumerable<IPriceModifer> Match(IReadOnlyList<CheckoutItem> items)
         {
-            var itemSearchStartPos = 0;
             var offers = new List<IPriceModifer>();
 
-            while (itemSearchStartPos < items.Count) {
+            while (true)
+            {
+                var offer = ParseOffer(items);
 
-                var offer = ParseOffer();
-
-                if (offer != null)
+                if (offer == null)
                 {
-                    offers.Add(offer);
+                    break;
                 }
+
+                offers.Add(offer);
             }
 
             return offers;
+        }
 
-            MultipleItemsPriceModifier ParseOffer()
+        private MultipleItemsPriceModifier ParseOffer(IReadOnlyList<CheckoutItem> items)
+        {
+            var foundPositions = new List<int>();
+
+            foreach (var sku in _skus)
             {
-                var matchedItems = new List<CheckoutItem>();
-                var parsedItems = items.Where(i => !i.InDeal);
+                // Look for the first item that is not already assigned to a deal, is not already been found and has a matching Sku.
+                var position = items.FindIndex((item, idx) => !item.InDeal && !foundPositions.Any(p => p == idx) && item.Sku.Equals(sku, StringComparison.OrdinalIgnoreCase));
 
-                foreach (var sku in _skus)
+                if (position == -1)
                 {
-                    for (int i = itemSearchStartPos, n = items.Count(); i < n; i++)
-                    {
-
-                        var item = items[0];
-
-                        if (sku.Equals(item.Sku, StringComparison.OrdinalIgnoreCase))
-                        {
-                            matchedItems.Add(item);
-                            itemSearchStartPos = i + 1;
-                            break;
-                        }
-                    }
+                    return null;
                 }
 
-                // If the whole deal is complete then return the deal modifier
-                // NB: Need to modify the items so they are ignored in future checks
-                if (matchedItems.Count == _skus.Count)
-                {
-                    matchedItems.ForEach(i => i.InDeal = true);
-                    // TODO: hould be checking for more items that match the deal
-                    return
-                        new MultipleItemsPriceModifier {
-
-                        }
-                    ;
-                }
-
-                return null;
+                foundPositions.Add(position);
             }
+
+            // If the found positions match the amount of skus, then we have a match
+            if (foundPositions.Count == _skus.Count)
+            {
+                foundPositions.ForEach(pos => items[pos].InDeal = true);
+                return new MultipleItemsPriceModifier();
+            }
+
+            return null;
         }
     }
 }
