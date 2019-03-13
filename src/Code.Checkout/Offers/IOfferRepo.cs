@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Code.Checkout.Offers
 {
     public interface IOfferRepo
     {
-        IOffers GetOffers();
+        IEnumerable<IOfferMatcher> GetOffers();
     }
 }
