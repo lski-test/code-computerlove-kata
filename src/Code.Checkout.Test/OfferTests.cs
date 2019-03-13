@@ -13,7 +13,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Single_Multiplier_Deal_Correctly_Discovered()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -27,7 +27,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Single_Multiplier_Deal_Different_Items_Discovered()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "B", "C" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "B", "C" }, 130);
 
             var deals = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -41,7 +41,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Single_Multiplier_Deal_Out_of_Order_Discovered()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "C", "B" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "C", "B" }, 130);
 
             var deals = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -55,7 +55,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Single_Multiplier_Deal_With_Remainders()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -70,7 +70,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Single_Multiplier_Deal_With_Other_Items()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -86,7 +86,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Several_Multiplier_Deals_Correctly_Discovered()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -103,7 +103,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void No_Deals_Correctly_Discovered()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
 
             var deals = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -117,7 +117,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Price_Modifier_Raw_Test()
         {
-            var mod = new MultipleItemsPriceModifier(20, 15);
+            var mod = new StrictItemsPriceModifier(20, 15);
 
             mod.Modify(100).Should().Be(95);
         }
@@ -125,7 +125,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Price_Modifier_From_Single_Multiplier_Deal()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
 
             var modifiers = matcher.Match(new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -141,7 +141,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Price_Modifier_From_Single_Multiplier_Deal_With_Additional()
         {
-            var matcher = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
 
             var items = new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -160,8 +160,8 @@ namespace Code.Checkout.Test
         [Fact]
         public void Two_Deal_Matchers()
         {
-            var matcher1 = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130);
-            var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45);
+            var matcher1 = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130);
+            var matcher2 = new StrictItemOfferMatcher(new[] { "B", "B" }, 45);
 
             var items = new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -188,8 +188,8 @@ namespace Code.Checkout.Test
         [Fact]
         public void Two_Deal_Matchers_With_Additionals()
         {
-            var matcher1 = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130); // reduction of 20
-            var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45); // reduction of 15
+            var matcher1 = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130); // reduction of 20
+            var matcher2 = new StrictItemOfferMatcher(new[] { "B", "B" }, 45); // reduction of 15
 
             var items = new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -220,9 +220,9 @@ namespace Code.Checkout.Test
         [Fact]
         public void Multiple_Deal_Matchers_With_Additionals()
         {
-            var matcher1 = new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130); // reduction of 20
-            var matcher2 = new MultipleItemsMatcher(new[] { "B", "B" }, 45); // reduction of 15
-            var matcher3 = new MultipleItemsMatcher(new[] { "C", "C" }, 30); // reduction of 10
+            var matcher1 = new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130); // reduction of 20
+            var matcher2 = new StrictItemOfferMatcher(new[] { "B", "B" }, 45); // reduction of 15
+            var matcher3 = new StrictItemOfferMatcher(new[] { "C", "C" }, 30); // reduction of 10
 
             var items = new[] {
                 new OfferItem { Sku = "A", Price = 50 },
@@ -256,8 +256,8 @@ namespace Code.Checkout.Test
         public void Chain_Two_Deal_Matchers()
         {
             var matchers = new[] {
-                new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
-                new MultipleItemsMatcher(new[] { "B", "B" }, 45)
+                new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130),
+                new StrictItemOfferMatcher(new[] { "B", "B" }, 45)
             };
 
             var items = new[] {
@@ -281,8 +281,8 @@ namespace Code.Checkout.Test
         public void Chain_Two_Deal_Matchers_With_Additionals()
         {
             var matchers = new[] {
-                new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
-                new MultipleItemsMatcher(new[] { "B", "B" }, 45)
+                new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130),
+                new StrictItemOfferMatcher(new[] { "B", "B" }, 45)
             };
 
             var items = new[] {
@@ -309,9 +309,9 @@ namespace Code.Checkout.Test
         public void Chain_Multiple_Deal_Matchers_With_Additionals()
         {
             var matchers = new[] {
-                new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
-                new MultipleItemsMatcher(new[] { "B", "B" }, 45),
-                new MultipleItemsMatcher(new[] { "C", "C" }, 30)
+                new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130),
+                new StrictItemOfferMatcher(new[] { "B", "B" }, 45),
+                new StrictItemOfferMatcher(new[] { "C", "C" }, 30)
             };
 
             var items = new[] {
@@ -380,8 +380,8 @@ namespace Code.Checkout.Test
         private void Offers_Applied_In_Correct_Order()
         {
             var processor = new ProcessOffers(new MockOfferRepo(new List<IOfferMatcher> {
-                 new MultipleItemsMatcher(new[] { "B", "B" }, 130),
-                 new MultipleItemsMatcher(new[] { "A", "B", "B" }, 45, 1)
+                 new StrictItemOfferMatcher(new[] { "B", "B" }, 130),
+                 new StrictItemOfferMatcher(new[] { "A", "B", "B" }, 45, 1)
             }));
 
             var products = new[] {

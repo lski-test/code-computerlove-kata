@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace Code.Checkout.Offers
 {
-    public class MultipleItemsMatcher : IOfferMatcher
+    public class StrictItemOfferMatcher : IOfferMatcher
     {
         private IReadOnlyList<string> _skus;
         private readonly decimal _fixedPrice;
 
         public int Priority { get; }
 
-        public MultipleItemsMatcher(IReadOnlyList<string> skus, decimal fixedPrice, short priority = 0)
+        public StrictItemOfferMatcher(IReadOnlyList<string> skus, decimal fixedPrice, short priority = 0)
         {
             _skus = skus ?? throw new ArgumentNullException(nameof(skus));
 
@@ -43,7 +43,7 @@ namespace Code.Checkout.Offers
             return results;
         }
 
-        private MultipleItemsPriceModifier ParseOffer(IList<OfferItem> items)
+        private StrictItemsPriceModifier ParseOffer(IList<OfferItem> items)
         {
             var foundPositions = new List<int>();
 
@@ -72,7 +72,7 @@ namespace Code.Checkout.Offers
                         item.Price
                     );
 
-                return new MultipleItemsPriceModifier(itemsTotal, _fixedPrice);
+                return new StrictItemsPriceModifier(itemsTotal, _fixedPrice);
             }
 
             return null;

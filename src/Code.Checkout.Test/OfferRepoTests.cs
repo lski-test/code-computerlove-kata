@@ -17,8 +17,8 @@ namespace Code.Checkout.Test
 
             offers.Count.Should().Be(2);
 
-            offers[0].Should().BeEquivalentTo(new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130));
-            offers[1].Should().BeEquivalentTo(new MultipleItemsMatcher(new[] { "B", "B" }, 45));
+            offers[0].Should().BeEquivalentTo(new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130));
+            offers[1].Should().BeEquivalentTo(new StrictItemOfferMatcher(new[] { "B", "B" }, 45));
         }
     }
 }

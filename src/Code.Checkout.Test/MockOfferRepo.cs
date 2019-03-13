@@ -11,8 +11,8 @@ namespace Code.Checkout.Test
         public MockOfferRepo(List<IOfferMatcher> matchers = null)
         {
             _matchers = matchers ?? new List<IOfferMatcher> {
-                 new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
-                 new MultipleItemsMatcher(new[] { "B", "B" }, 45)
+                 new StrictItemOfferMatcher(new[] { "A", "A", "A" }, 130),
+                 new StrictItemOfferMatcher(new[] { "B", "B" }, 45)
             };
         }
 
