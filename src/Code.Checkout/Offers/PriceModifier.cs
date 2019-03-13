@@ -12,14 +12,14 @@ namespace Code.Checkout.Offers
         /// <summary>
         /// Creates new modifier
         /// </summary>
-        /// <param name="discountAmount">The amount to remove from the total in the <see cref="Modifier(decimal)"/> function</param>
+        /// <param name="discountAmount">The amount to remove from the total in the <see cref="Modify(decimal)"/> function</param>
         public PriceModifier(decimal discountAmount)
         {
             _discountAmount = discountAmount;
         }
 
         /// <inheritdoc />
-        public decimal Modifier(decimal total)
+        public decimal Modify(decimal total)
         {
             return total - _discountAmount;
         }

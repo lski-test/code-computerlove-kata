@@ -117,7 +117,7 @@ namespace Code.Checkout.Test
         {
             var mod = new MultipleItemsPriceModifier(20, 15);
 
-            mod.Modifier(100).Should().Be(95);
+            mod.Modify(100).Should().Be(95);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace Code.Checkout.Test
 
             modifiers.Modifiers.Should().HaveCount(1);
 
-            modifiers.Modifiers[0].Modifier(150).Should().Be(130);
+            modifiers.Modifiers[0].Modify(150).Should().Be(130);
         }
 
         [Fact]
@@ -152,7 +152,7 @@ namespace Code.Checkout.Test
 
             modifiers.Modifiers.Should().HaveCount(1);
 
-            modifiers.Modifiers[0].Modifier(180).Should().Be(160);
+            modifiers.Modifiers[0].Modify(180).Should().Be(160);
         }
 
         [Fact]
@@ -177,8 +177,8 @@ namespace Code.Checkout.Test
             modifier1.Modifiers.Count().Should().Be(1);
             modifier2.Modifiers.Count().Should().Be(1);
 
-            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modify(accumulator));
+            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modify(accumulator));
 
             (itemsPrice - price).Should().Be(35);
         }
@@ -209,8 +209,8 @@ namespace Code.Checkout.Test
             modifier1.Modifiers.Count().Should().Be(1);
             modifier2.Modifiers.Count().Should().Be(1);
 
-            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modify(accumulator));
+            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modify(accumulator));
 
             (itemsPrice - price).Should().Be(35);
         }
@@ -243,9 +243,9 @@ namespace Code.Checkout.Test
             modifier2.Modifiers.Count().Should().Be(1);
             modifier3.Modifiers.Count().Should().Be(1);
 
-            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier3.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modify(accumulator));
+            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modify(accumulator));
+            price = modifier3.Modifiers.Aggregate(price, (accumulator, item) => item.Modify(accumulator));
 
             (itemsPrice - price).Should().Be(45);
         }
@@ -270,7 +270,7 @@ namespace Code.Checkout.Test
 
             var matches = matchers.Aggregate(new OfferMatches(items), (accumulator, item) => item.Match(accumulator));
 
-            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modify(accumulator));
 
             (itemsPrice - price).Should().Be(35);
         }
@@ -298,7 +298,7 @@ namespace Code.Checkout.Test
 
             var matches = matchers.Aggregate(new OfferMatches(items), (accumulator, item) => item.Match(accumulator));
 
-            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modify(accumulator));
 
             (itemsPrice - price).Should().Be(35);
         }
@@ -327,7 +327,7 @@ namespace Code.Checkout.Test
 
             var matches = matchers.Aggregate(new OfferMatches(items), (accumulator, item) => item.Match(accumulator));
 
-            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            var price = matches.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modify(accumulator));
 
             (itemsPrice - price).Should().Be(45);
         }

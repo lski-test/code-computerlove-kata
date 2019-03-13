@@ -12,6 +12,6 @@ namespace Code.Checkout.Offers
         /// </summary>
         /// <param name="total"></param>
         /// <returns></returns>
-        decimal Modifier(decimal total);
+        decimal Modify(decimal total);
     }
 }
