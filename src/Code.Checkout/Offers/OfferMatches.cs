@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Code.Checkout.Offers
 {
     /// <summary>
-    /// A DTO that holds the resulting information about 
+    /// A DTO that holds the resulting information about products and how they need to adjust the final total.
     /// </summary>
     public class OfferMatches
     {
