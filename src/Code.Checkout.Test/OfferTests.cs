@@ -19,7 +19,7 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "A", Price = 50 }
             });
 
-            deals.Should().HaveCount(1);
+            deals.Modifiers.Should().HaveCount(1);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "C", Price = 50 }
             });
 
-            deals.Should().HaveCount(1);
+            deals.Modifiers.Should().HaveCount(1);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "C", Price = 50 }
             });
 
-            deals.Should().HaveCount(1);
+            deals.Modifiers.Should().HaveCount(1);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "A", Price = 50 }
             });
 
-            deals.Should().HaveCount(1);
+            deals.Modifiers.Should().HaveCount(1);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "A", Price = 50 }
             });
 
-            deals.Should().HaveCount(1);
+            deals.Modifiers.Should().HaveCount(1);
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "A", Price = 50 }
             });
 
-            deals.Should().HaveCount(2);
+            deals.Modifiers.Should().HaveCount(2);
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "C", Price = 50 }
             });
 
-            deals.Should().HaveCount(0);
+            deals.Modifiers.Should().HaveCount(0);
         }
 
         [Fact]
@@ -131,9 +131,9 @@ namespace Code.Checkout.Test
                 new CheckoutItem { Sku = "A", Price = 50 }
             });
 
-            modifiers.Should().HaveCount(1);
+            modifiers.Modifiers.Should().HaveCount(1);
 
-            modifiers.ElementAt(0).Modifier(150).Should().Be(130);
+            modifiers.Modifiers[0].Modifier(150).Should().Be(130);
         }
 
         [Fact]
@@ -150,9 +150,9 @@ namespace Code.Checkout.Test
 
             var modifiers = matcher.Match(items);
 
-            modifiers.Should().HaveCount(1);
+            modifiers.Modifiers.Should().HaveCount(1);
 
-            modifiers.ElementAt(0).Modifier(180).Should().Be(160);
+            modifiers.Modifiers[0].Modifier(180).Should().Be(160);
         }
 
         [Fact]
@@ -174,11 +174,11 @@ namespace Code.Checkout.Test
             var modifier1 = matcher1.Match(items);
             var modifier2 = matcher2.Match(items);
 
-            modifier1.Count().Should().Be(1);
-            modifier2.Count().Should().Be(1);
+            modifier1.Modifiers.Count().Should().Be(1);
+            modifier2.Modifiers.Count().Should().Be(1);
 
-            var price = modifier1.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier2.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
 
             (itemsPrice - price).Should().Be(35);
         }
@@ -206,11 +206,11 @@ namespace Code.Checkout.Test
             var modifier1 = matcher1.Match(items);
             var modifier2 = matcher2.Match(items);
 
-            modifier1.Count().Should().Be(1);
-            modifier2.Count().Should().Be(1);
+            modifier1.Modifiers.Count().Should().Be(1);
+            modifier2.Modifiers.Count().Should().Be(1);
 
-            var price = modifier1.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier2.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
 
             (itemsPrice - price).Should().Be(35);
         }
@@ -239,13 +239,13 @@ namespace Code.Checkout.Test
             var modifier2 = matcher2.Match(items);
             var modifier3 = matcher3.Match(items);
 
-            modifier1.Count().Should().Be(1);
-            modifier2.Count().Should().Be(1);
-            modifier3.Count().Should().Be(1);
+            modifier1.Modifiers.Count().Should().Be(1);
+            modifier2.Modifiers.Count().Should().Be(1);
+            modifier3.Modifiers.Count().Should().Be(1);
 
-            var price = modifier1.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier2.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
-            price = modifier3.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            var price = modifier1.Modifiers.Aggregate(itemsPrice, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier2.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
+            price = modifier3.Modifiers.Aggregate(price, (accumulator, item) => item.Modifier(accumulator));
 
             (itemsPrice - price).Should().Be(45);
         }

@@ -21,26 +21,29 @@ namespace Code.Checkout.Offers
             Priority = priority;
         }
 
-        public IEnumerable<IPriceModifer> Match(IReadOnlyList<CheckoutItem> items)
+        public OfferMatches Match(IList<CheckoutItem> items)
         {
-            var offers = new List<IPriceModifer>();
+            return Match(new OfferMatches(items));
+        }
 
+        public OfferMatches Match(OfferMatches results)
+        {
             while (true)
             {
-                var offer = ParseOffer(items);
+                var offer = ParseOffer(results.Items);
 
                 if (offer == null)
                 {
                     break;
                 }
 
-                offers.Add(offer);
+                results.Modifiers.Add(offer);
             }
 
-            return offers;
+            return results;
         }
 
-        private MultipleItemsPriceModifier ParseOffer(IReadOnlyList<CheckoutItem> items)
+        private MultipleItemsPriceModifier ParseOffer(IList<CheckoutItem> items)
         {
             var foundPositions = new List<int>();
 

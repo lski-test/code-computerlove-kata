@@ -11,8 +11,16 @@ namespace Code.Checkout.Offers
         int Priority { get; }
 
         /// <summary>
-        /// Find what items match the offer and return the amount of offers (along with their modifiers to the total price)
+        /// Converts items to a <see cref="OfferMatches"/> and then calls <see cref="Match(OfferMatches)"/>
         /// </summary>
-        IEnumerable<IPriceModifer> Match(IReadOnlyList<CheckoutItem> items);
+        OfferMatches Match(IList<CheckoutItem> items);
+
+        /// <summary>
+        /// Find what items match the offer and return the amount of offers (along with their modifiers to the total price).
+        /// NB: Accepts the results of a previous Matchers
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
+        OfferMatches Match(OfferMatches results);
     }
 }
