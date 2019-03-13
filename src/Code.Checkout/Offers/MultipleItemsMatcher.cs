@@ -60,8 +60,16 @@ namespace Code.Checkout.Offers
             // If the found positions match the amount of skus, then we have a match
             if (foundPositions.Count == _skus.Count)
             {
-                foundPositions.ForEach(pos => items[pos].InDeal = true);
-                return new MultipleItemsPriceModifier();
+                var itemsTotal = foundPositions
+                    .Select(pos => {
+                        var item = items[pos];
+                        item.InDeal = true;
+                        return item;
+                    }).Sum(item =>
+                        item.Price
+                    );
+
+                return new MultipleItemsPriceModifier(itemsTotal, _fixedPrice);
             }
 
             return null;

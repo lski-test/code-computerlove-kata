@@ -116,7 +116,7 @@ namespace Code.Checkout.Test
         [Fact]
         public void Price_Modifier_Raw_Test() {
 
-            var mod = new MultipleItemsPriceModifier();
+            var mod = new MultipleItemsPriceModifier(20, 15);
 
             mod.Modifier(100).Should().Be(95);
         }
