@@ -6,9 +6,19 @@ namespace Code.Checkout.Test
 {
     public class MockOfferRepo : IOfferRepo
     {
+        private List<IOfferMatcher> _matchers;
+
+        public MockOfferRepo()
+        {
+            _matchers = new List<IOfferMatcher> {
+                 new MultipleItemsMatcher(new[] { "A", "A", "A" }, 130),
+                 new MultipleItemsMatcher(new[] { "B", "B" }, 45)
+            };
+        }
+
         public IEnumerable<IOfferMatcher> GetOffers()
         {
-            throw new NotImplementedException();
+            return _matchers;
         }
     }
 }
