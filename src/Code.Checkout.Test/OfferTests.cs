@@ -379,7 +379,26 @@ namespace Code.Checkout.Test
         [Fact]
         private void Offers_Applied_In_Correct_Order()
         {
-            throw new NotImplementedException();
+            var processor = new ProcessOffers(new MockOfferRepo(new List<IOfferMatcher> {
+                 new MultipleItemsMatcher(new[] { "B", "B" }, 130),
+                 new MultipleItemsMatcher(new[] { "A", "B", "B" }, 45, 1)
+            }));
+
+            var products = new[] {
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "A", Price = 50 },
+                new Product { Sku = "C", Price = 20 },
+                new Product { Sku = "C", Price = 20 },
+                new Product { Sku = "B", Price = 30 },
+                new Product { Sku = "B", Price = 30 },
+                new Product { Sku = "D", Price = 20 }
+            };
+            var productsTotal = products.Sum(p => p.Price);
+
+            var breakdown = processor.Apply(products);
+
+            (productsTotal - breakdown.SalePrice).Should().Be(15);
         }
     }
 }
